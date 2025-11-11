@@ -72,7 +72,7 @@ export const EstadoEmpleados_rrhh = () => {
 
       <button
         onClick={() => navigate("/rrhh/admin")}
-        className="px-3 py-1 rounded bg-[#23272b] hover:!bg-[#3a3f45] active:scale-95 mb-4"
+        className="px-3 py-1 rounded !bg-[#23272b] hover:!bg-[#3a3f45] active:scale-95 mb-4"
       >
         ← Volver al panel admin
       </button>

@@ -78,7 +78,7 @@ export const GestionEmpleados_rrhh = () => {
         <div className="flex items-center justify-between mb-6">
           <button
             onClick={() => navigate("/rrhh/admin")}
-            className="px-3 py-1 rounded hover:bg-[#23272b] active:scale-95 text-[#c7cdd4]"
+            className="px-3 py-1 rounded !hover:bg-[#23272b] active:scale-95 !text-[#c7cdd4]"
           >
             ← Volver al panel admin
           </button>

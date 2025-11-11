@@ -14,6 +14,7 @@ import { ListarEmpleados } from './Modulo de Recursos Humanos/Admin/ListarEmplea
 import { ProtectedRoute } from './Modulo de Recursos Humanos/ProtectedRoute'
 import Unauthorized from './Modulo de Recursos Humanos/Unauthorized'
 import { ListarEmpleadosSinCuenta } from './Modulo de Recursos Humanos/Admin/ListarEmpleadosSinCuenta'
+import { SolicitarAusencia } from './Modulo de Recursos Humanos/Empleado/SolicitarAusencia'
 
 function App() {
   return (
@@ -24,7 +25,17 @@ function App() {
           {/* Acá añadan sus rutas con el url correspondiente */}
 
           <Route path="/rrhh/" element={<Login_rrhh/>}></Route>
-          <Route path="/rrhh/empleado/" element={<HomeEmpleado_rrhh/>}></Route>
+          <Route path="/rrhh/empleado/" element={
+            <ProtectedRoute>
+              <HomeEmpleado_rrhh/>
+            </ProtectedRoute>
+          }></Route>
+
+          <Route path="/rrhh/empleado/solicitarAusencia" element={
+            <ProtectedRoute>
+              <SolicitarAusencia />
+            </ProtectedRoute>
+          }></Route>
 
 
           <Route path="/rrhh/admin/" element={
