@@ -6,9 +6,9 @@ import Home from './views/Home'
 import { Login_rrhh } from './Modulo de Recursos Humanos/Login_rrhh'
 import { HomeAdmin_rrhh } from './Modulo de Recursos Humanos/Admin/HomeAdmin_rrhh'
 import { HomeEmpleado_rrhh } from './Modulo de Recursos Humanos/Empleado/HomeEmpleado_rrhh'
-import { GestionEmpleados_rrhh } from "./Modulo de Recursos Humanos/Admin/GestionEmpleados_rrhh";
-import { EstadoEmpleados_rrhh } from "./Modulo de Recursos Humanos/Admin/EstadoEmpleados_rrhh";
-
+import { GestionEmpleados_rrhh } from "./Modulo de Recursos Humanos/Admin/GestionEmpleados_rrhh"
+import { EstadoEmpleados_rrhh } from "./Modulo de Recursos Humanos/Admin/EstadoEmpleados_rrhh"
+import { NuevoEmpleado_rrhh } from './Modulo de Recursos Humanos/Admin/NuevoEmpleado_rrhh'
 import { AsignarRol } from './Modulo de Recursos Humanos/Admin/AsignarRol'
 import { ListarEmpleados } from './Modulo de Recursos Humanos/Admin/ListarEmpleados'
 import { ProtectedRoute } from './Modulo de Recursos Humanos/ProtectedRoute'
@@ -41,6 +41,11 @@ function App() {
           <Route path="/rrhh/admin/gestion-empleados" element={
             <ProtectedRoute requiredRole='ADMIN'>
               <GestionEmpleados_rrhh />
+            </ProtectedRoute>
+            } />
+          <Route path="/rrhh/admin/gestion-empleados/nuevo" element={
+            <ProtectedRoute requiredRole='ADMIN'>
+              <NuevoEmpleado_rrhh />
             </ProtectedRoute>
             } />
           <Route path="/rrhh/admin/estado-empleados" element={
