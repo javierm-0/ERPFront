@@ -84,7 +84,7 @@ export const GestionEmpleados_rrhh = () => {
           </button>
 
           <button
-            onClick={() => navigate("/rrhh/admin/gestion-empleados/nuevo")}
+            onClick={() => navigate("/rrhh/admin/gestion-empleados/nuevo-empleado")}
             className="bg-gradient-to-tr from-[#c7ccd2] to-[#a7aeb6] text-[#0f1115] border border-[#a7b0b8] hover:from-[#d5d9de] hover:to-[#b3bbc3] active:scale-95 px-4 py-2 rounded-md font-semibold"
           >
             + Agregar empleado

@@ -15,6 +15,9 @@ import { ProtectedRoute } from './Modulo de Recursos Humanos/ProtectedRoute'
 import Unauthorized from './Modulo de Recursos Humanos/Unauthorized'
 import { ListarEmpleadosSinCuenta } from './Modulo de Recursos Humanos/Admin/ListarEmpleadosSinCuenta'
 import { SolicitarAusencia } from './Modulo de Recursos Humanos/Empleado/SolicitarAusencia'
+import { JefeMisEmpleados_rrhh } from './Modulo de Recursos Humanos/Empleado/JefeMisEmpleados_rrhh';
+import { JefeSolicitudesBaja_rrhh } from './Modulo de Recursos Humanos/Empleado/JefeSolicitudesBaja_rrhh';
+import { AdminSolicitudesBaja_rrhh } from './Modulo de Recursos Humanos/Admin/AdminSolicitudesBaja_rrhh';
 
 function App() {
   return (
@@ -54,7 +57,7 @@ function App() {
               <GestionEmpleados_rrhh />
             </ProtectedRoute>
             } />
-          <Route path="/rrhh/admin/gestion-empleados/nuevo" element={
+          <Route path="/rrhh/admin/gestion-empleados/nuevo-empleado" element={
             <ProtectedRoute requiredRole='ADMIN'>
               <NuevoEmpleado_rrhh />
             </ProtectedRoute>
@@ -77,6 +80,18 @@ function App() {
             </ProtectedRoute>
           }></Route>
 
+          <Route path="/rrhh/jefe/mis-empleados" element={
+            <JefeMisEmpleados_rrhh />
+          } />
+
+          <Route path="/rrhh/jefe/solicitudes-baja" element={
+              <JefeSolicitudesBaja_rrhh />
+          } />
+
+          <Route path="/rrhh/admin/solicitudes-baja" element={
+              <AdminSolicitudesBaja_rrhh />
+          } />
+          
           <Route path='/unauthorized' element={
             <Unauthorized />
           }></Route>
