@@ -3,24 +3,23 @@ import React from "react";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  requiredRole?: "ADMIN";
+  requiredRoles?: string[];
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
-  requiredRole,
+  requiredRoles,
 }) => {
   const token = localStorage.getItem("token");
   const rol = localStorage.getItem("rol");
-  
-  if (requiredRole && rol !== requiredRole) {
+
+  if (requiredRoles && !requiredRoles.includes(rol || "")) {
     return <Navigate to="/unauthorized" replace />;
   }
 
   if (!token) {
     return <Navigate to="/rrhh" replace />;
   }
-
 
   return <>{children}</>;
 };

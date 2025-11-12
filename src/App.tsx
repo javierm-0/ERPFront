@@ -16,7 +16,7 @@ import Unauthorized from './Modulo de Recursos Humanos/Unauthorized'
 import { ListarEmpleadosSinCuenta } from './Modulo de Recursos Humanos/Admin/ListarEmpleadosSinCuenta'
 import { SolicitarAusencia } from './Modulo de Recursos Humanos/Empleado/SolicitarAusencia'
 import { JefeMisEmpleados_rrhh } from './Modulo de Recursos Humanos/Empleado/JefeMisEmpleados_rrhh';
-import { JefeSolicitudesBaja_rrhh } from './Modulo de Recursos Humanos/Empleado/JefeSolicitudesBaja_rrhh';
+import { JefeSolicitarBaja_rrhh } from './Modulo de Recursos Humanos/Empleado/JefeSolicitarBaja_rrhh';
 import { AdminSolicitudesBaja_rrhh } from './Modulo de Recursos Humanos/Admin/AdminSolicitudesBaja_rrhh';
 
 function App() {
@@ -42,54 +42,60 @@ function App() {
 
 
           <Route path="/rrhh/admin/" element={
-            <ProtectedRoute requiredRole='ADMIN'>
+            <ProtectedRoute requiredRoles={['ADMIN']}>
               <HomeAdmin_rrhh/>
             </ProtectedRoute>
             }></Route>
 
           <Route path="/rrhh/admin/elegirEmpleado/" element={
-            <ProtectedRoute requiredRole='ADMIN'>
+            <ProtectedRoute requiredRoles={['ADMIN']}>
               <ListarEmpleados />
             </ProtectedRoute>
             }></Route>
           <Route path="/rrhh/admin/gestion-empleados" element={
-            <ProtectedRoute requiredRole='ADMIN'>
+            <ProtectedRoute requiredRoles={['ADMIN']}>
               <GestionEmpleados_rrhh />
             </ProtectedRoute>
             } />
           <Route path="/rrhh/admin/gestion-empleados/nuevo-empleado" element={
-            <ProtectedRoute requiredRole='ADMIN'>
+            <ProtectedRoute requiredRoles={['ADMIN']}>
               <NuevoEmpleado_rrhh />
             </ProtectedRoute>
             } />
           <Route path="/rrhh/admin/estado-empleados" element={
-            <ProtectedRoute requiredRole='ADMIN'>
+            <ProtectedRoute requiredRoles={['ADMIN']}>
               <EstadoEmpleados_rrhh />
             </ProtectedRoute>
             } />
 
           <Route path="/rrhh/admin/elegirEmpleado/asignarRol/:idEmpleado" element={
-            <ProtectedRoute requiredRole='ADMIN'>
+            <ProtectedRoute requiredRoles={['ADMIN']}>
               <AsignarRol />
             </ProtectedRoute>
             }></Route>
 
           <Route path="rrhh/admin/crearCuentaDeTrabajo" element={
-            <ProtectedRoute requiredRole='ADMIN'>
+            <ProtectedRoute requiredRoles={['ADMIN']}>
               <ListarEmpleadosSinCuenta />
             </ProtectedRoute>
           }></Route>
 
-          <Route path="/rrhh/jefe/mis-empleados" element={
-            <JefeMisEmpleados_rrhh />
+          <Route path="/rrhh/jefe/mis-empleados/:idDepto" element={
+            <ProtectedRoute requiredRoles={['JEFE_DEPARTAMENTO']}>
+              <JefeMisEmpleados_rrhh />
+            </ProtectedRoute>
           } />
 
-          <Route path="/rrhh/jefe/solicitudes-baja" element={
-              <JefeSolicitudesBaja_rrhh />
+          <Route path="/rrhh/jefe/solicitar-baja/:idEmpleado" element={
+            <ProtectedRoute requiredRoles={['JEFE_DEPARTAMENTO']}>
+              <JefeSolicitarBaja_rrhh />
+            </ProtectedRoute>
           } />
 
           <Route path="/rrhh/admin/solicitudes-baja" element={
+            <ProtectedRoute requiredRoles={['ADMIN']}>
               <AdminSolicitudesBaja_rrhh />
+            </ProtectedRoute>
           } />
           
           <Route path='/unauthorized' element={

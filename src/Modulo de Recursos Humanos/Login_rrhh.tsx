@@ -9,6 +9,7 @@ type Empleado = {
   email: string;
   rol: string;
   roles: string[];
+  id_departamento: number;
 };
 
 export const Login_rrhh = () =>{
@@ -39,6 +40,9 @@ export const Login_rrhh = () =>{
                 if (empleadoData.rol === "ADMIN" || empleadoData.rol === "ADMIN_TI" || empleadoData.rol === "SUPERVISOR_RRHH") {
                     console.log("admin");
                     navigate("/rrhh/admin/");
+                } else if (empleadoData.rol === "JEFE_DEPARTAMENTO"){
+                    console.log("jefe_depto");
+                    navigate(`/rrhh/jefe/mis-empleados/${empleadoData.id_departamento}`);
                 } else {
                     console.log("empleado");
                     navigate("/rrhh/empleado/");
