@@ -9,7 +9,7 @@ interface Ausencia {
   tipo: string;
   fecha_inicio: string;
   fecha_fin: string;
-  motivo: string;
+  motivo?: string;
   fecha_solicitud: string;
   estado: string;
 }
@@ -58,7 +58,6 @@ export const VerEstadoSolicitudes = () => {
     fetchAusencias();
   }, []);
 
-  // Mensaje de carga
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen bg-[#0f1115]">
@@ -69,7 +68,6 @@ export const VerEstadoSolicitudes = () => {
     );
   }
 
-  // Error de conexión
   if (errorConexion) {
     return (
       <div className="flex flex-col items-center justify-center h-screen text-center bg-[#0f1115]">
@@ -89,7 +87,6 @@ export const VerEstadoSolicitudes = () => {
     );
   }
 
-  // Si no hay solicitudes
   if (ausencias.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-screen text-center bg-[#0f1115]">
@@ -103,7 +100,7 @@ export const VerEstadoSolicitudes = () => {
     );
   }
 
-  // Tabla principal
+  // Tabla de solicitudes(especifico del usuario logeado)
   return (
     <div className="p-8 bg-[#0f1115] min-h-screen text-[#c7cdd4]">
       <h2 className="text-3xl font-semibold mb-6 text-[#d5d9de]">

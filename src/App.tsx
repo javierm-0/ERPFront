@@ -19,6 +19,7 @@ import { JefeMisEmpleados_rrhh } from './Modulo de Recursos Humanos/Empleado/Jef
 import { JefeSolicitarBaja_rrhh } from './Modulo de Recursos Humanos/Empleado/JefeSolicitarBaja_rrhh';
 import { AdminSolicitudesBaja_rrhh } from './Modulo de Recursos Humanos/Admin/AdminSolicitudesBaja_rrhh';
 import { VerEstadoSolicitudes } from './Modulo de Recursos Humanos/Empleado/VerEstadoSolicitudes'
+import { GestionarSolicitudes } from './Modulo de Recursos Humanos/Admin/GestionarSolicitudes'
 
 
 function App() {
@@ -53,6 +54,12 @@ function App() {
               <HomeAdmin_rrhh/>
             </ProtectedRoute>
             }></Route>
+
+          <Route path="/rrhh/admin/gestionSolicitudes/" element={
+            <ProtectedRoute requiredRoles={['ADMIN']}>
+              <GestionarSolicitudes />
+            </ProtectedRoute>
+          }></Route>
 
           <Route path="/rrhh/admin/elegirEmpleado/" element={
             <ProtectedRoute requiredRoles={['ADMIN']}>
