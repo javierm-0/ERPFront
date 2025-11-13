@@ -3,47 +3,66 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 interface SolicitudAusencia {
+  id_empleado: number;
   tipo: string;
-  fechaInicio: string;
-  fechaFin: string;
-  motivo?: string;
+  fecha_inicio: string;
+  fecha_fin: string;
+  motivo: string;
 }
 
-const tiposAusencia: string[] = ["VACACIONES", "PERMISO", "ENFERMEDAD", "CAPACITACION"];
+const tiposAusencia: string[] = [
+  "VACACIONES",
+  "PERMISO",
+  "LICENCIA",
+  "OTRO",
+];
 
 export const SolicitarAusencia: React.FC = () => {
-    const navigate = useNavigate();
-    const [form, setForm] = useState<SolicitudAusencia>({
-        tipo: "",
-        fechaInicio: "",
-        fechaFin: "",
-        motivo: "",
-    });
+  const navigate = useNavigate();
+  const [form, setForm] = useState<SolicitudAusencia>({
+    id_empleado: -1,
+    tipo: "",
+    fecha_inicio: "",
+    fecha_fin: "",
+    motivo: "",
+  });
 
-    const [mensaje, setMensaje] = useState<string | null>(null);
-    const [error, setError] = useState<string | null>(null);
+  const [mensaje, setMensaje] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-    ) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
-    };
+  const obtenerIdDesdeToken = (): number | null => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      return payload.sub;
+    } catch (err) {
+      console.error("Error al decodificar token:", err);
+      return null;
+    }
+  };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMensaje(null);
     setError(null);
 
-    const { tipo, fechaInicio, fechaFin } = form;
-
-    if (!tipo || !fechaInicio || !fechaFin) {
+    const { tipo, fecha_inicio, fecha_fin } = form;
+    if (!tipo || !fecha_inicio || !fecha_fin) {
       setError("Por favor completa todos los campos obligatorios.");
       return;
     }
 
-    const inicio = new Date(fechaInicio);
-    const fin = new Date(fechaFin);
-
+    const inicio = new Date(fecha_inicio);
+    const fin = new Date(fecha_fin);
     if (fin < inicio) {
       setError("⚠️ La fecha de fin no puede ser anterior a la fecha de inicio.");
       return;
@@ -56,11 +75,19 @@ export const SolicitarAusencia: React.FC = () => {
       return;
     }
 
+    const idEmpleado = obtenerIdDesdeToken();
+    if (!idEmpleado) {
+      setError("❌ No se pudo obtener el ID del empleado. Inicia sesión nuevamente.");
+      return;
+    }
+
     try {
-      const backUrl = "/de_momento_ni_idea";
-      await axios.post(backUrl, form);
+      const backUrl = "http://localhost:3000/rrhh/ausencias/";
+      const payload: SolicitudAusencia = { ...form, id_empleado: idEmpleado, fecha_inicio: new Date(fecha_inicio).toISOString(), fecha_fin: new Date(fecha_fin).toISOString()};
+      console.log("payload: ",payload);
+      await axios.post(backUrl, payload);
       setMensaje("✅ Solicitud enviada correctamente.");
-      setForm({ tipo: "", fechaInicio: "", fechaFin: "", motivo: "" });
+      setForm({id_empleado: idEmpleado, tipo: "", fecha_inicio: "", fecha_fin: "", motivo: "" });
     } catch (err) {
       console.error(err);
       setError("❌ Error al enviar la solicitud. Intenta nuevamente.");
@@ -69,13 +96,13 @@ export const SolicitarAusencia: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#0f1115] p-6">
-
       <button
         onClick={() => navigate("/rrhh/empleado")}
-        className="px-3 py-1 rounded !bg-[#23272b] hover:!bg-[#3a3f45] active:scale-95 mb-4 !text-[#c7cdd4] "
+        className="px-3 py-1 rounded !bg-[#23272b] hover:!bg-[#3a3f45] active:scale-95 mb-4 !text-[#c7cdd4]"
       >
         ← Volver al panel empleado
       </button>
+
       <form
         onSubmit={handleSubmit}
         className="bg-[#23272b] p-8 rounded-lg shadow-lg w-full max-w-md text-[#c7cdd4]"
@@ -85,8 +112,8 @@ export const SolicitarAusencia: React.FC = () => {
         </h2>
 
         <div className="h-6 mb-4">
-        {error && <p className="text-red-600 text-sm">{error}</p>}
-        {mensaje && <p className="text-green-500 text-sm">{mensaje}</p>}
+          {error && <p className="text-red-600 text-sm">{error}</p>}
+          {mensaje && <p className="text-green-500 text-sm">{mensaje}</p>}
         </div>
 
         <label className="block mb-3">
@@ -110,8 +137,8 @@ export const SolicitarAusencia: React.FC = () => {
           Fecha de inicio <span className="text-red-600">*</span>
           <input
             type="date"
-            name="fechaInicio"
-            value={form.fechaInicio}
+            name="fecha_inicio"
+            value={form.fecha_inicio}
             onChange={handleChange}
             className="mt-1 w-full bg-[#1a1d21] border border-[#3a3f45] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#a7aeb6]"
           />
@@ -121,8 +148,8 @@ export const SolicitarAusencia: React.FC = () => {
           Fecha de fin <span className="text-red-600">*</span>
           <input
             type="date"
-            name="fechaFin"
-            value={form.fechaFin}
+            name="fecha_fin"
+            value={form.fecha_fin}
             onChange={handleChange}
             className="mt-1 w-full bg-[#1a1d21] border border-[#3a3f45] rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#a7aeb6]"
           />

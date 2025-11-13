@@ -18,6 +18,8 @@ import { SolicitarAusencia } from './Modulo de Recursos Humanos/Empleado/Solicit
 import { JefeMisEmpleados_rrhh } from './Modulo de Recursos Humanos/Empleado/JefeMisEmpleados_rrhh';
 import { JefeSolicitarBaja_rrhh } from './Modulo de Recursos Humanos/Empleado/JefeSolicitarBaja_rrhh';
 import { AdminSolicitudesBaja_rrhh } from './Modulo de Recursos Humanos/Admin/AdminSolicitudesBaja_rrhh';
+import { VerEstadoSolicitudes } from './Modulo de Recursos Humanos/Empleado/VerEstadoSolicitudes'
+
 
 function App() {
   return (
@@ -37,6 +39,11 @@ function App() {
           <Route path="/rrhh/empleado/solicitarAusencia" element={
             <ProtectedRoute>
               <SolicitarAusencia />
+            </ProtectedRoute>
+          }></Route>
+          <Route path="rrhh/empleado/estadoSolicitud" element={
+            <ProtectedRoute>
+              <VerEstadoSolicitudes />
             </ProtectedRoute>
           }></Route>
 
