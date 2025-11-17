@@ -8,6 +8,8 @@ interface Rol {
   descripcion: string;
 }
 
+const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
 export const AsignarRol: React.FC = () => {
   const { idEmpleado } = useParams<{ idEmpleado: string }>();
   const navigate = useNavigate();
@@ -24,7 +26,7 @@ export const AsignarRol: React.FC = () => {
 
     const obtenerRoles = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/rrhh/roles");
+        const res = await axios.get(API+"/rrhh/roles");
         setRoles(res.data);
       } catch (error) {
         console.error("Error al obtener roles:", error);
@@ -44,7 +46,7 @@ export const AsignarRol: React.FC = () => {
     setErrorGuardar(false);
 
     try {
-      await axios.put(`http://localhost:3000/rrhh/empleados/${idEmpleado}`, {
+      await axios.put(`${API}/rrhh/empleados/${idEmpleado}`, {
         rol: rolSeleccionado,
       });
       navigate("/rrhh/admin/elegirEmpleado");

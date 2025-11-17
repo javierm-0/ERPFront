@@ -23,6 +23,7 @@ interface Ausencia {
   fecha_solicitud: string;
   empleado: Empleado;
 }
+const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export const GestionarSolicitudes = () => {
   const [ausencias, setAusencias] = useState<Ausencia[]>([]);
@@ -32,7 +33,7 @@ export const GestionarSolicitudes = () => {
 
   const fetchAusencias = async () => {
     try {
-      const res = await axios.get<Ausencia[]>("http://localhost:3000/rrhh/ausencias/");
+      const res = await axios.get<Ausencia[]>(API+"/rrhh/ausencias/");
       const pendientes = res.data.filter((a) => a.estado === 'PENDIENTE');
       setAusencias(pendientes);
     } catch (error) {
@@ -45,7 +46,7 @@ export const GestionarSolicitudes = () => {
 
   const actualizarEstado = async (id: number, nuevoEstado: "APROBADA" | "RECHAZADA") => {
     try {
-      await axios.put(`http://localhost:3000/rrhh/ausencias/${id}/estado`, { estado: nuevoEstado });
+      await axios.put(`${API}/rrhh/ausencias/${id}/estado`, { estado: nuevoEstado });
       // Remover la fila actualizada (ya no es PENDIENTE)
       setAusencias((prev) => prev.filter((a) => a.id_ausencia !== id));
     } catch (error) {

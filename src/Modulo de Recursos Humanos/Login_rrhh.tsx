@@ -19,12 +19,13 @@ export const Login_rrhh = () =>{
     const navigate = useNavigate();
     const [empleado, setEmpleado] = useState<Empleado | null>(null);
     
+    const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
     const handleLogin = async (e: React.FormEvent) =>{
         e.preventDefault();
         console.log("enter o click");
         try {
-            const url = "http://localhost:3000/auth/login";
+            const url = API+"/auth/login";
             const bodyJson = {
                 email: correo,
                 password: pass

@@ -15,6 +15,7 @@ interface Empleado {
   estado: string;
   departamento: Departamento;
 }
+const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export const ListarEmpleados: React.FC = () => {
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
@@ -26,7 +27,7 @@ export const ListarEmpleados: React.FC = () => {
   useEffect(() => {
     const obtenerEmpleados = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/rrhh/empleados");
+        const res = await axios.get(API+"/rrhh/empleados");
         setEmpleados(res.data);
       } catch (error) {
         console.error("Error al obtener empleados:", error);

@@ -13,6 +13,7 @@ interface Ausencia {
   fecha_solicitud: string;
   estado: string;
 }
+const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export const VerEstadoSolicitudes = () => {
   const [ausencias, setAusencias] = useState<Ausencia[]>([]);
@@ -44,7 +45,7 @@ export const VerEstadoSolicitudes = () => {
 
       try {
         const res = await axios.get<Ausencia[]>(
-          `http://localhost:3000/rrhh/empleados/${idEmpleado}/ausencias`
+          `${API}/rrhh/empleados/${idEmpleado}/ausencias`
         );
         setAusencias(res.data);
       } catch (error) {

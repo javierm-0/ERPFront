@@ -16,6 +16,7 @@ const tiposAusencia: string[] = [
   "LICENCIA",
   "OTRO",
 ];
+const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export const SolicitarAusencia: React.FC = () => {
   const navigate = useNavigate();
@@ -82,7 +83,7 @@ export const SolicitarAusencia: React.FC = () => {
     }
 
     try {
-      const backUrl = "http://localhost:3000/rrhh/ausencias/";
+      const backUrl = API+"/rrhh/ausencias/";
       const payload: SolicitudAusencia = { ...form, id_empleado: idEmpleado, fecha_inicio: new Date(fecha_inicio).toISOString(), fecha_fin: new Date(fecha_fin).toISOString()};
       console.log("payload: ",payload);
       await axios.post(backUrl, payload);

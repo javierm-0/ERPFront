@@ -17,6 +17,7 @@ interface Empleado {
   estado: string;
   departamento: Departamento;
 }
+const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export const ListarEmpleadosSinCuenta: React.FC = () => {
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
@@ -27,7 +28,7 @@ export const ListarEmpleadosSinCuenta: React.FC = () => {
   useEffect(() => {
     const obtenerEmpleadosSinCuenta = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/rrhh/empleados/sin-cuenta/");
+        const res = await axios.get(API+"/rrhh/empleados/sin-cuenta/");
         setEmpleados(res.data);
       } catch (error) {
         console.error("Error al obtener empleados sin cuenta:", error);
@@ -63,7 +64,7 @@ export const ListarEmpleadosSinCuenta: React.FC = () => {
             email: empleado.email,
             password: "123456"//xd
         }
-        const res = await axios.post(`http://localhost:3000/auth/register`,registerPayload);
+        const res = await axios.post(`${API}/auth/register`,registerPayload);
         if(res.status === 201){
             setEmpleados(prev => prev.filter(e => e.id_empleado !== empleado.id_empleado));
             await Swal.fire({
