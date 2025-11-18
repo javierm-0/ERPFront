@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import axios, { AxiosError } from "axios";
+import { useNavigate, type ErrorResponse } from "react-router-dom";
 
 interface SolicitudAusencia {
   id_empleado: number;
@@ -90,8 +90,14 @@ export const SolicitarAusencia: React.FC = () => {
       setMensaje("✅ Solicitud enviada correctamente.");
       setForm({id_empleado: idEmpleado, tipo: "", fecha_inicio: "", fecha_fin: "", motivo: "" });
     } catch (err) {
-      console.error(err);
-      setError("❌ Error al enviar la solicitud. Intenta nuevamente.");
+      if(err instanceof AxiosError){
+        if(err.response?.data?.message){
+          setError(`❌ ${err.response?.data?.message ?? `Error de red o servidor (status ${err.response?.status ?? "desconocido"})`}`);
+        }
+        else{
+          setError("❌ Error al enviar la solicitud. Intenta nuevamente.");
+        }
+      }
     }
   };
 
