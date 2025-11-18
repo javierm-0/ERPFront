@@ -95,13 +95,13 @@ function App() {
           }></Route>
 
           <Route path="/rrhh/jefe/mis-empleados/:idDepto" element={
-            <ProtectedRoute requiredRoles={['JEFE_DEPARTAMENTO']}>
+            <ProtectedRoute requiredRoles={['JEFE_COMPRAS', 'JEFE_LOGISTICA', 'JEFE_VENTAS', 'JEFE_INVENTARIO', 'JEFE_RRHH']}>
               <JefeMisEmpleados_rrhh />
             </ProtectedRoute>
           } />
 
           <Route path="/rrhh/jefe/solicitar-baja/:idEmpleado" element={
-            <ProtectedRoute requiredRoles={['JEFE_DEPARTAMENTO']}>
+            <ProtectedRoute requiredRoles={['JEFE_COMPRAS', 'JEFE_LOGISTICA', 'JEFE_VENTAS', 'JEFE_INVENTARIO', 'JEFE_RRHH']}>
               <JefeSolicitarBaja_rrhh />
             </ProtectedRoute>
           } />

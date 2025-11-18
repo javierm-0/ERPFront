@@ -26,6 +26,7 @@ export const Login_rrhh = () =>{
         console.log("enter o click");
         try {
             const url = API+"/auth/login";
+            const rolesPermitidos = [  "JEFE_COMPRAS", "JEFE_LOGISTICA", "JEFE_VENTAS", "JEFE_INVENTARIO", "JEFE_RRHH"];
             const bodyJson = {
                 email: correo,
                 password: pass
@@ -41,7 +42,7 @@ export const Login_rrhh = () =>{
                 if (empleadoData.rol === "ADMIN" || empleadoData.rol === "ADMIN_TI" || empleadoData.rol === "SUPERVISOR_RRHH") {
                     console.log("admin");
                     navigate("/rrhh/admin/");
-                } else if (empleadoData.rol === "JEFE_DEPARTAMENTO"){
+                } else if (rolesPermitidos.includes(empleadoData.rol) ){
                     console.log("jefe_depto");
                     navigate(`/rrhh/jefe/mis-empleados/${empleadoData.id_departamento}`);
                 } else {
