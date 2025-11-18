@@ -51,6 +51,7 @@ export const Login_rrhh = () =>{
             }
             else{
                 console.warn("credenciales invalidas o error de conexion");
+                setLoginError(true);
             }
 
         } catch (error : any) {
@@ -60,6 +61,7 @@ export const Login_rrhh = () =>{
             }
             else{
                 console.error("ocurrio un error: ",error);
+                setLoginError(true);
             }
             
         }
