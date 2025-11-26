@@ -68,11 +68,11 @@ const Home = () => {
         </button>
 
 
-        <button className="module-button disabled" disabled>
+        <button className="module-button hidden" disabled>
           Compras
         </button>
 
-        <button className="module-button disabled" disabled>
+        <button className="module-button hidden" disabled>
           Logística/Despacho
         </button>
       </div>
